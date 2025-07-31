@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { ImageCard } from "@/components/ImageCard";
 import { StepContainer } from "@/components/StepContainer";
+import { ColorCustomizer } from "@/components/ColorCustomizer";
 import stage1 from "@/assets/stage-1.jpg";
 import stage2 from "@/assets/stage-2.jpg";
 import stage3 from "@/assets/stage-3.jpg";
+import stage4 from "@/assets/stage-4.jpg";
+import stage5 from "@/assets/stage-5.jpg";
+import stage6 from "@/assets/stage-6.jpg";
 
 interface StageSelectionProps {
   selectedStage: string | null;
@@ -30,6 +35,24 @@ const stages = [
     src: stage3,
     title: "Modern Minimalist",
     description: "Clean lines with contemporary design elements for a sleek, professional look."
+  },
+  {
+    id: "stage-4",
+    src: stage4,
+    title: "Bohemian Garden",
+    description: "Macrame backdrop with earthy tones and hanging plants for a natural, boho vibe."
+  },
+  {
+    id: "stage-5",
+    src: stage5,
+    title: "Vintage Garden Party",
+    description: "Floral arches with rustic wooden elements perfect for outdoor celebrations."
+  },
+  {
+    id: "stage-6",
+    src: stage6,
+    title: "Industrial Chic",
+    description: "Exposed brick and metal framework with Edison bulbs for an urban loft feel."
   }
 ];
 
@@ -40,6 +63,8 @@ export const StageSelection = ({
   onPrevious,
   showPrevious = true
 }: StageSelectionProps) => {
+  const [colorFilter, setColorFilter] = useState("original");
+  const [showColorPicker, setShowColorPicker] = useState(false);
   return (
     <StepContainer
       title="Choose Your Stage Design"
@@ -49,7 +74,16 @@ export const StageSelection = ({
       isNextDisabled={!selectedStage}
       showPrevious={showPrevious}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="mb-8 flex justify-center">
+        <ColorCustomizer
+          onColorChange={setColorFilter}
+          currentColor={colorFilter}
+          isVisible={showColorPicker}
+          onToggle={() => setShowColorPicker(!showColorPicker)}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {stages.map((stage, index) => (
           <ImageCard
             key={stage.id}
@@ -59,6 +93,7 @@ export const StageSelection = ({
             isSelected={selectedStage === stage.id}
             onClick={() => onStageSelect(stage.id)}
             index={index}
+            colorFilter={colorFilter}
           />
         ))}
       </div>

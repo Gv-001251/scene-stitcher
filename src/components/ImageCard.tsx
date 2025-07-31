@@ -8,6 +8,7 @@ interface ImageCardProps {
   isSelected?: boolean;
   onClick: () => void;
   index?: number;
+  colorFilter?: string;
 }
 
 export const ImageCard = ({
@@ -16,7 +17,8 @@ export const ImageCard = ({
   description,
   isSelected = false,
   onClick,
-  index = 0
+  index = 0,
+  colorFilter = "original"
 }: ImageCardProps) => {
   return (
     <div
@@ -40,7 +42,10 @@ export const ImageCard = ({
           <img
             src={src}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className={cn(
+              "w-full h-full object-cover transition-all duration-500 group-hover:scale-110",
+              colorFilter !== "original" && `filter ${colorFilter}`
+            )}
           />
           <div
             className={cn(
