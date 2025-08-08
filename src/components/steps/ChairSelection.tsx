@@ -2,12 +2,12 @@ import { useState } from "react";
 import { ImageCard } from "@/components/ImageCard";
 import { StepContainer } from "@/components/StepContainer";
 import { ColorCustomizer } from "@/components/ColorCustomizer";
-import chairs1 from "@/assets/chairs-1.jpg";
-import chairs2 from "@/assets/chairs-2.jpg";
-import chairs3 from "@/assets/chairs-3.jpg";
-import chairs4 from "@/assets/chairs-4.jpg";
-import chairs5 from "@/assets/chairs-5.jpg";
-import chairs6 from "@/assets/chairs-6.jpg";
+import chairs1 from "/Users/ganesan.kgayathri/Downloads/chairs-1.jpg";
+import chairs2 from "/Users/ganesan.kgayathri/Downloads/chairs-2.jpg";
+import chairs3 from "/Users/ganesan.kgayathri/Downloads/chairs-3.jpg";
+import chairs4 from "/Users/ganesan.kgayathri/Downloads/chairs-4.jpg";
+import chairs5 from "/Users/ganesan.kgayathri/Downloads/chairs-5.jpg";
+import chairs6 from "/Users/ganesan.kgayathri/Downloads/chairs-6.jpg";
 
 interface ChairSelectionProps {
   selectedChairs: string | null;

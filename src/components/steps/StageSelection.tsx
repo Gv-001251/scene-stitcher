@@ -2,12 +2,12 @@ import { useState } from "react";
 import { ImageCard } from "@/components/ImageCard";
 import { StepContainer } from "@/components/StepContainer";
 import { ColorCustomizer } from "@/components/ColorCustomizer";
-import stage1 from "@/assets/stage-1.jpg";
-import stage2 from "@/assets/stage-2.jpg";
-import stage3 from "@/assets/stage-3.jpg";
-import stage4 from "@/assets/stage-4.jpg";
-import stage5 from "@/assets/stage-5.jpg";
-import stage6 from "@/assets/stage-6.jpg";
+import stage1 from "/Users/ganesan.kgayathri/Downloads/stage-1.jpg";
+import stage2 from "/Users/ganesan.kgayathri/Downloads/stage-2.jpg";
+import stage3 from "/Users/ganesan.kgayathri/Downloads/stage-3.jpg";
+import stage4 from "/Users/ganesan.kgayathri/Downloads/stage-4.jpg";
+import stage5 from "/Users/ganesan.kgayathri/Downloads/stage-5.jpg";
+import stage6 from "/Users/ganesan.kgayathri/Downloads/stage-6.jpg";
 
 interface StageSelectionProps {
   selectedStage: string | null;

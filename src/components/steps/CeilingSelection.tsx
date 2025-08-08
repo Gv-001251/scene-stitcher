@@ -4,10 +4,10 @@ import { StepContainer } from "@/components/StepContainer";
 import { ColorCustomizer } from "@/components/ColorCustomizer";
 import ceiling1 from "@/assets/ceiling-1.jpg";
 import ceiling2 from "@/assets/ceiling-2.jpg";
-import ceiling3 from "@/assets/ceiling-3.jpg";
-import ceiling4 from "@/assets/ceiling-4.jpg";
-import ceiling5 from "@/assets/ceiling-5.jpg";
-import ceiling6 from "@/assets/ceiling-6.jpg";
+import ceiling3 from "/Users/ganesan.kgayathri/Downloads/ceiling-3.jpg";
+import ceiling4 from "/Users/ganesan.kgayathri/Downloads/ceiling-4.jpg";
+import ceiling5 from "/Users/ganesan.kgayathri/Downloads/ceiling-5.jpg";
+import ceiling6 from "/Users/ganesan.kgayathri/Downloads/ceiling-6.jpg";
 
 interface CeilingSelectionProps {
   selectedCeiling: string | null;

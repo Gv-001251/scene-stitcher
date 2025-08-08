@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Download, Share2, RotateCcw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { api } from "@/services/api";
 
 interface FinalResultProps {
   selections: {
@@ -18,31 +19,65 @@ export const FinalResult = ({ selections, onStartAgain }: FinalResultProps) => {
   const [stitchedImage, setStitchedImage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate image stitching process
     const stitchImages = async () => {
       setIsStitching(true);
       
-      // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      // For now, we'll use one of the stage images as the final result
-      // In a real implementation, this would combine all selected images
-      const stageMap: Record<string, string> = {
-        'stage-1': '/src/assets/stage-1.jpg',
-        'stage-2': '/src/assets/stage-2.jpg',
-        'stage-3': '/src/assets/stage-3.jpg'
-      };
-      
-      setStitchedImage(stageMap[selections.stage || 'stage-1']);
-      setIsStitching(false);
-      toast.success("Your personalized event design is ready!");
+      try {
+        // Convert selections to image filenames
+        const layers = [
+          selections.stage ? `${selections.stage}.jpg` : null,
+          selections.ceiling ? `${selections.ceiling}.jpg` : null,
+          selections.chairs ? `${selections.chairs}.jpg` : null,
+          selections.layout ? `${selections.layout}.jpg` : null,
+        ].filter(Boolean) as string[];
+
+        if (layers.length === 0) {
+          throw new Error('No images selected');
+        }
+
+        // Map layout selection to arrangement style
+        const layoutToArrangement: Record<string, 'theater' | 'lounge' | 'banquet'> = {
+          'layout-1': 'banquet',  // Circular Dining -> banquet
+          'layout-2': 'theater',  // Theater Style -> theater
+          'layout-3': 'lounge',   // Lounge Setup -> lounge
+          'layout-4': 'lounge',   // Cocktail Party -> lounge
+          'layout-5': 'lounge',   // Garden Party Mix -> lounge
+          'layout-6': 'banquet',  // Banquet Hall -> banquet
+        };
+
+        const arrangement = selections.layout ? layoutToArrangement[selections.layout] || 'theater' : 'theater';
+
+        // Call the backend API with arrangement style
+        const imageBlob = await api.composeImages(layers, arrangement);
+        
+        // Convert blob to data URL for display
+        const imageUrl = URL.createObjectURL(imageBlob);
+        setStitchedImage(imageUrl);
+        
+        toast.success("Your personalized event design is ready!");
+      } catch (error) {
+        console.error('Error stitching images:', error);
+        toast.error(error instanceof Error ? error.message : 'Failed to create design');
+      } finally {
+        setIsStitching(false);
+      }
     };
 
     stitchImages();
   }, [selections]);
 
   const handleDownload = () => {
-    toast.success("Your event design has been downloaded!");
+    if (stitchedImage) {
+      const link = document.createElement('a');
+      link.href = stitchedImage;
+      link.download = 'event-design.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      toast.success("Your event design has been downloaded!");
+    } else {
+      toast.error("No design available to download");
+    }
   };
 
   const handleShare = () => {
